@@ -1,24 +1,22 @@
-module 0x0::my_coin {
-    use sui::coin::{TreasuryCap ,Self , Coin };
-    use sui::tx_context::{Self,TxContext};
+module 0x0::faucet_coin {
+    use sui::coin::{TreasuryCap ,Self };
+    // use sui::tx_context::{Self,TxContext};
 
     //Otw
-    public struct MY_COIN has drop {}
-
-    fun init (witness: MY_COIN , ctx : &mut TxContext){
+    public struct FAUCET_COIN has drop {}
+    fun init (witness: FAUCET_COIN , ctx : &mut TxContext){
         let(treasury , coinmetadata) = coin::create_currency(
             witness,
             5 , 
-            b"Coin's Mortal", 
-            b"Adias_thuong_hieu_cua_toi" ,
-            b"Dong_coin_nay_rat_hiem",
+            b"Coin faucet", 
+            b"pet's",
+            b"idea",
             option::none(), 
             ctx);
             transfer::public_freeze_object(coinmetadata); // đóng băng ojb coin này không thể chuyển nhượng nữanữa
             transfer::public_share_object(treasury);
-            
     }
-    public entry fun mint_token( treasury : &mut TreasuryCap<MY_COIN> ,ctx :   &mut TxContext ){
+    public entry fun mint_token( treasury : &mut TreasuryCap<FAUCET_COIN> ,ctx :   &mut TxContext ){
         let coin_object = coin::mint(treasury, 350000, ctx);
         transfer::public_transfer(coin_object, ctx.sender());
     }
