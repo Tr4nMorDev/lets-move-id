@@ -3,7 +3,7 @@ module 0x0::faucet_coin {
     // use sui::tx_context::{Self,TxContext};
 
     //Otw
-    public struct FAUCET_COIN has drop {}
+    public struct FAUCET_COIN has drop  {}
     fun init (witness: FAUCET_COIN , ctx : &mut TxContext){
         let(treasury , coinmetadata) = coin::create_currency(
             witness,
