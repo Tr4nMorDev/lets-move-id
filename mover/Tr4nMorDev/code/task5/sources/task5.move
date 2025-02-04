@@ -1,6 +1,6 @@
 
 
-module Tr4nMorDev::Tr4nMorDev{
+module task5::Tr4nMorDev{
     use faucet_coin::faucet_coin::FAUCET_COIN;
     use my_coin::my_coin::MY_COIN;
 

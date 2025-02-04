@@ -1,4 +1,4 @@
-module 0x0::faucet_coin {
+module faucet_coin::faucet_coin {
     use sui::coin::{TreasuryCap ,Self };
     // use sui::tx_context::{Self,TxContext};
 

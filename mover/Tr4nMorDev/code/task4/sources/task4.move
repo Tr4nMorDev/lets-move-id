@@ -10,13 +10,12 @@ module task4::task4 {
     use sui::coin::{Self,Coin};
     use sui::balance::{Self,Balance};
     use sui::random::{Self, Random};
-    use faucet_coin::faucet_coin::FAUCET_COIN;
     use std::debug;
+    use faucet_coin::faucet_coin;
     
-
     public struct Game has key, store {
         id: UID,
-        balance: Balance<FAUCET_COIN>,
+        balance: Balance<faucet_coin::FAUCET_COIN>,
         id_admin_Tr4nMorDev: address
         // id_admin_Tr4nMorDev: 0x4292aa0b0a7a0c1c196fc7dcaea31507814a8f5ce043a904d48217d9cd8d73b4
     }
@@ -27,14 +26,14 @@ module task4::task4 {
     fun init (ctx: &mut TxContext) {
         let game = Game {   
             id : object::new(ctx),
-            balance : balance::zero<FAUCET_COIN>(),
+            balance : balance::zero<faucet_coin::FAUCET_COIN>(),
             id_admin_Tr4nMorDev :  ctx.sender() 
         };
         transfer::share_object(game); 
         let admin  = Admin{id : object::new(ctx)}; 
         transfer::transfer(admin,   ctx.sender());
     }   
-    public  entry fun deposit (game : &mut Game , coin : &mut Coin<FAUCET_COIN> ,amount : u64 ){
+    public  entry fun deposit (game : &mut Game , coin : &mut Coin<faucet_coin::FAUCET_COIN> ,amount : u64 ){
         let  mu_coin = coin::balance_mut(  coin);
         let  split_balance = balance::split(mu_coin,amount); 
         balance::join(&mut game.balance, split_balance);
@@ -44,13 +43,13 @@ module task4::task4 {
             let cash = coin::take(&mut game.balance, amount, ctx);
             transfer::public_transfer(cash, ctx.sender());
         }
-    public fun takeReward (game : &mut Game  , coin:&mut Coin<FAUCET_COIN> , amount : u64){
+    public fun takeReward (game : &mut Game  , coin:&mut Coin<faucet_coin::FAUCET_COIN> , amount : u64){
         let amount = amount * 2 ;
         let reward_balance = balance::split(&mut game.balance, amount);
         balance::join(coin::balance_mut( coin), reward_balance);
     }
     
-    public fun deduct_money (game : &mut Game ,coin :&mut Coin<FAUCET_COIN>, amount : u64):u64{
+    public fun deduct_money (game : &mut Game ,coin :&mut Coin<faucet_coin::FAUCET_COIN>, amount : u64):u64{
         let un = balance::split(coin.balance_mut(), amount);
         balance::join(&mut game.balance, un)
     }
@@ -59,7 +58,7 @@ module task4::task4 {
         guess: bool,
         game: &mut Game,
         rnd: &Random, 
-        coin: &mut Coin<FAUCET_COIN>,
+        coin: &mut Coin<faucet_coin::FAUCET_COIN>,
         amount : u64,
         ctx: &mut TxContext
     ) {
@@ -83,4 +82,5 @@ module task4::task4 {
             deduct_money(game, coin, amount);
         }
     }
+
 }

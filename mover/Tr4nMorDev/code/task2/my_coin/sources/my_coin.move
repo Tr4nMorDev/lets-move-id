@@ -1,4 +1,4 @@
-module 0x0::my_coin {
+module my_coin::my_coin {
     use sui::coin::{TreasuryCap ,Self };
     // use sui::tx_context::{Self,TxContext};
     use sui::transfer;
